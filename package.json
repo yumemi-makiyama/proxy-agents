@@ -9,7 +9,7 @@
     "format": "prettier --write \"**/*.{ts,js,mjs}\"",
     "ci:version": "changeset version && pnpm install --no-frozen-lockfile",
     "ci:publish": "pnpm publish -r && changeset tag",
-    "postinstall": "pnpm build"
+    "postinstall": "npm run build"
   },
   "devDependencies": {
     "@changesets/cli": "^2.26.1",
