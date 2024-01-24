@@ -1,6 +1,7 @@
 {
   "private": true,
   "name": "proxy-agent-monorepo",
+  "version": "0.0.1",
   "scripts": {
     "build": "turbo run build",
     "lint": "turbo run lint",
