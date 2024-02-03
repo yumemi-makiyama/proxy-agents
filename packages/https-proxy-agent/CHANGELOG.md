@@ -1,5 +1,11 @@
 # https-proxy-agent
 
+## 7.1.1
+
+### Patch Changes
+
+- c3c405e: Add missing `URL` type import
+
 ## 7.0.2
 
 ### Patch Changes
