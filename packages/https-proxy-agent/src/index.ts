@@ -47,12 +47,15 @@ export class HttpsProxyAgent<Uri extends string> extends Agent {
 	readonly proxy: URL;
 	proxyHeaders: OutgoingHttpHeaders | (() => OutgoingHttpHeaders);
 	connectOpts: net.TcpNetConnectOpts & tls.ConnectionOptions;
+	forwardingOpts: HttpsProxyAgentOptions<string>;
 
-	constructor(proxy: Uri | URL, opts?: HttpsProxyAgentOptions<Uri>) {
+
+	constructor(proxy: Uri | URL, opts?: HttpsProxyAgentOptions<Uri>, forwardingOpts?: HttpsProxyAgentOptions<Uri>) {
 		super(opts);
 		this.options = { path: undefined };
 		this.proxy = typeof proxy === 'string' ? new URL(proxy) : proxy;
 		this.proxyHeaders = opts?.headers ?? {};
+		this.forwardingOpts = forwardingOpts ?? {};
 		debug('Creating new HttpsProxyAgent instance: %o', this.proxy.href);
 
 		// Trim off the brackets from IPv6 addresses
@@ -150,6 +153,7 @@ export class HttpsProxyAgent<Uri extends string> extends Agent {
 				const servername = opts.servername || opts.host;
 				return tls.connect({
 					...omit(opts, 'host', 'path', 'port'),
+					...this.forwardingOpts,
 					socket,
 					servername: net.isIP(servername) ? undefined : servername,
 				});
